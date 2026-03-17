@@ -50,7 +50,7 @@
     .unit-info p{font-size:11px;color:var(--muted)}
     .unit-arrow{color:var(--muted);font-size:20px}
     .grade-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 6px;border-radius:100px;margin-left:4px}
-    .g3{background:#dbeafe;color:#1d4ed8}.g4{background:#d1fae5;color:#065f46}.g5{background:#ede9fe;color:#5b21b6}.g0{background:#fef3c7;color:#92400e}
+    .g3{background:#dbeafe;color:#1d4ed8}.g4{background:#d1fae5;color:#065f46}.g5{background:#ede9fe;color:#5b21b6}.g6{background:#fce7f3;color:#9d174d}.g0{background:#fef3c7;color:#92400e}
     /* SETUP */
     #setupScreen .body{padding:14px;flex:1;overflow-y:auto}
     .setup-card{background:#fff;border-radius:var(--r);padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
@@ -142,7 +142,7 @@
   <div class="hero">
     <div class="hero-icon">🎙️</div>
     <h1>英语听写</h1>
-    <p>人教版 PEP · 三~五年级全册<br>单词 · 词组 · 句子，纸笔听写</p>
+    <p>人教版 PEP · 三~六年级全册<br>单词 · 词组 · 句子，纸笔听写</p>
   </div>
   <div class="home-body">
     <div class="daily-banner" onclick="startDailyPlan()">
@@ -167,6 +167,7 @@
       <button class="tab-btn" id="tab3" onclick="filterGrade('3')">三年级</button>
       <button class="tab-btn" id="tab4" onclick="filterGrade('4')">四年级</button>
       <button class="tab-btn" id="tab5" onclick="filterGrade('5')">五年级</button>
+      <button class="tab-btn" id="tab6" onclick="filterGrade('6')">六年级</button>
       <button class="tab-btn" id="tab0" onclick="filterGrade('0')">综合</button>
     </div>
     <div class="unit-list" id="unitList"></div>
@@ -491,6 +492,99 @@ const UNITS = [
     {en:"Look! The elephant is drinking water.",cn:"看！大象正在喝水。",type:"sentence"},
     {en:"We are collecting leaves.",cn:"我们正在采集树叶。",type:"sentence"},
   ]},
+  // 六年级上册
+  {id:'6a1',grade:6,title:"六上 Unit1-2",name:"交通·地点",emoji:"🚦",iconBg:"linear-gradient(135deg,#7c3aed,#a855f7)",words:[
+    {en:"by bike",cn:"骑自行车",type:"phrase"},{en:"by bus",cn:"乘公交车",type:"phrase"},{en:"on foot",cn:"步行",type:"phrase"},
+    {en:"by subway",cn:"乘地铁",type:"phrase"},{en:"by taxi",cn:"乘出租车",type:"phrase"},{en:"by plane",cn:"乘飞机",type:"phrase"},
+    {en:"science museum",cn:"科学博物馆",type:"phrase"},{en:"post office",cn:"邮局",type:"phrase"},
+    {en:"bookstore",cn:"书店",type:"word"},{en:"cinema",cn:"电影院",type:"word"},{en:"hospital",cn:"医院",type:"word"},
+    {en:"library",cn:"图书馆",type:"word"},{en:"turn left",cn:"向左转",type:"phrase"},{en:"turn right",cn:"向右转",type:"phrase"},
+    {en:"go straight",cn:"直走",type:"phrase"},{en:"crossing",cn:"十字路口",type:"word"},{en:"traffic light",cn:"交通灯",type:"phrase"},
+    {en:"get to",cn:"到达",type:"phrase"},{en:"How do you go to school?",cn:"你怎么去学校？",type:"sentence"},
+    {en:"Usually I go to school on foot.",cn:"通常我步行去学校。",type:"sentence"},
+    {en:"Sometimes I go by bike.",cn:"有时我骑自行车去。",type:"sentence"},
+    {en:"Where is the cinema?",cn:"电影院在哪里？",type:"sentence"},
+    {en:"It's next to the hospital.",cn:"它在医院旁边。",type:"sentence"},
+    {en:"How can I get to the library?",cn:"我怎么去图书馆？",type:"sentence"},
+  ]},
+  {id:'6a2',grade:6,title:"六上 Unit3-4",name:"周末活动·爱好",emoji:"📅",iconBg:"linear-gradient(135deg,#f59e0b,#fbbf24)",words:[
+    {en:"visit grandparents",cn:"看望祖父母",type:"phrase"},{en:"take a trip",cn:"去旅行",type:"phrase"},
+    {en:"read a magazine",cn:"看杂志",type:"phrase"},{en:"go to the cinema",cn:"去看电影",type:"phrase"},
+    {en:"tomorrow",cn:"明天",type:"word"},{en:"tonight",cn:"今晚",type:"word"},{en:"next week",cn:"下周",type:"phrase"},
+    {en:"this morning",cn:"今天上午",type:"phrase"},{en:"this afternoon",cn:"今天下午",type:"phrase"},{en:"this evening",cn:"今天晚上",type:"phrase"},
+    {en:"comic book",cn:"漫画书",type:"phrase"},{en:"postcard",cn:"明信片",type:"word"},{en:"newspaper",cn:"报纸",type:"word"},
+    {en:"dictionary",cn:"字典",type:"word"},{en:"hobby",cn:"爱好",type:"word"},{en:"like doing",cn:"喜欢做某事",type:"phrase"},
+    {en:"like to do",cn:"喜欢去做某事",type:"phrase"},{en:"teach English",cn:"教英语",type:"phrase"},{en:"go hiking",cn:"去远足",type:"phrase"},
+    {en:"collect stamps",cn:"集邮",type:"phrase"},{en:"make kites",cn:"做风筝",type:"phrase"},
+    {en:"What are you going to do tomorrow?",cn:"你明天打算做什么？",type:"sentence"},
+    {en:"I'm going to visit my grandparents.",cn:"我打算去看望我的祖父母。",type:"sentence"},
+    {en:"What's your hobby?",cn:"你的爱好是什么？",type:"sentence"},
+    {en:"I like collecting stamps.",cn:"我喜欢集邮。",type:"sentence"},
+    {en:"He likes playing football.",cn:"他喜欢踢足球。",type:"sentence"},
+  ]},
+  {id:'6a3',grade:6,title:"六上 Unit5-6",name:"职业·情绪·地点",emoji:"👨‍⚕️",iconBg:"linear-gradient(135deg,#0ea5e9,#38bdf8)",words:[
+    {en:"singer",cn:"歌唱家",type:"word"},{en:"writer",cn:"作家",type:"word"},{en:"actor",cn:"男演员",type:"word"},
+    {en:"actress",cn:"女演员",type:"word"},{en:"artist",cn:"画家",type:"word"},{en:"TV reporter",cn:"电视台记者",type:"phrase"},
+    {en:"engineer",cn:"工程师",type:"word"},{en:"accountant",cn:"会计",type:"word"},{en:"policeman",cn:"男警察",type:"word"},
+    {en:"salesperson",cn:"销售员",type:"word"},{en:"cleaner",cn:"清洁工",type:"word"},{en:"pilot",cn:"飞行员",type:"word"},
+    {en:"angry",cn:"生气的",type:"word"},{en:"happy",cn:"高兴的",type:"word"},{en:"sad",cn:"伤心的",type:"word"},
+    {en:"excited",cn:"兴奋的",type:"word"},{en:"tired",cn:"累的",type:"word"},{en:"bored",cn:"无聊的",type:"word"},
+    {en:"rain",cn:"下雨",type:"word"},{en:"sun",cn:"太阳",type:"word"},{en:"cloud",cn:"云",type:"word"},
+    {en:"seed",cn:"种子",type:"word"},{en:"soil",cn:"土壤",type:"word"},{en:"sprout",cn:"发芽",type:"word"},
+    {en:"plant",cn:"植物",type:"word"},{en:"come from",cn:"来自",type:"phrase"},{en:"vapour",cn:"水蒸气",type:"word"},
+    {en:"stream",cn:"溪流",type:"word"},{en:"What does your father do?",cn:"你父亲是做什么的？",type:"sentence"},
+    {en:"He is an engineer.",cn:"他是工程师。",type:"sentence"},
+    {en:"She works in a car company.",cn:"她在一家汽车公司工作。",type:"sentence"},
+    {en:"Where does the rain come from?",cn:"雨水来自哪里？",type:"sentence"},
+  ]},
+  // 六年级下册
+  {id:'6b1',grade:6,title:"六下 Unit1-2",name:"比较级·生病·周末",emoji:"📏",iconBg:"linear-gradient(135deg,#10b981,#34d399)",words:[
+    {en:"taller",cn:"更高的",type:"word"},{en:"shorter",cn:"更矮的",type:"word"},{en:"stronger",cn:"更强壮的",type:"word"},
+    {en:"older",cn:"更年长的",type:"word"},{en:"younger",cn:"更年轻的",type:"word"},{en:"bigger",cn:"更大的",type:"word"},
+    {en:"smaller",cn:"更小的",type:"word"},{en:"heavier",cn:"更重的",type:"word"},{en:"longer",cn:"更长的",type:"word"},
+    {en:"thinner",cn:"更瘦的",type:"word"},{en:"have a fever",cn:"发烧",type:"phrase"},{en:"have a cold",cn:"感冒",type:"phrase"},
+    {en:"have a toothache",cn:"牙疼",type:"phrase"},{en:"have a headache",cn:"头疼",type:"phrase"},{en:"have a sore throat",cn:"喉咙疼",type:"phrase"},
+    {en:"matter",cn:"事情",type:"word"},{en:"sore",cn:"疼的",type:"word"},{en:"hurt",cn:"疼痛",type:"word"},
+    {en:"tired",cn:"疲劳的",type:"word"},{en:"excited",cn:"兴奋的",type:"word"},{en:"angry",cn:"生气的",type:"word"},
+    {en:"happy",cn:"高兴的",type:"word"},{en:"bored",cn:"无聊的",type:"word"},{en:"sad",cn:"伤心的",type:"word"},
+    {en:"watch TV",cn:"看电视",type:"phrase"},{en:"wash the clothes",cn:"洗衣服",type:"phrase"},
+    {en:"clean the room",cn:"打扫房间",type:"phrase"},{en:"play football",cn:"踢足球",type:"phrase"},{en:"visit grandparents",cn:"看望祖父母",type:"phrase"},
+    {en:"go to the park",cn:"去公园",type:"phrase"},{en:"read a book",cn:"读书",type:"phrase"},{en:"last weekend",cn:"上周末",type:"phrase"},
+    {en:"yesterday",cn:"昨天",type:"word"},{en:"tomorrow",cn:"明天",type:"word"},{en:"How tall are you?",cn:"你多高？",type:"sentence"},
+    {en:"I'm 164 cm tall.",cn:"我164厘米高。",type:"sentence"},{en:"You are taller than me.",cn:"你比我高。",type:"sentence"},
+    {en:"What's the matter?",cn:"你怎么了？",type:"sentence"},{en:"I have a fever.",cn:"我发烧了。",type:"sentence"},
+  ]},
+  {id:'6b2',grade:6,title:"六下 Unit3-4",name:"过去式·过去进行时",emoji:"🕰️",iconBg:"linear-gradient(135deg,#ec4899,#f472b6)",words:[
+    {en:"watch-watched",cn:"看-过去式",type:"word"},{en:"wash-washed",cn:"洗-过去式",type:"word"},
+    {en:"clean-cleaned",cn:"打扫-过去式",type:"word"},{en:"play-played",cn:"玩-过去式",type:"word"},
+    {en:"visit-visited",cn:"看望-过去式",type:"word"},{en:"do-did",cn:"做-过去式",type:"word"},
+    {en:"go-went",cn:"去-过去式",type:"word"},{en:"read-read",cn:"读-过去式",type:"word"},
+    {en:"swim-swam",cn:"游泳-过去式",type:"word"},{en:"fly-flew",cn:"飞-过去式",type:"word"},
+    {en:"last weekend",cn:"上周末",type:"phrase"},{en:"last night",cn:"昨晚",type:"phrase"},{en:"yesterday",cn:"昨天",type:"word"},
+    {en:"tomorrow",cn:"明天",type:"word"},{en:"tonight",cn:"今晚",type:"word"},{en:"next weekend",cn:"下周末",type:"phrase"},
+    {en:"fly kites",cn:"放风筝",type:"phrase"},{en:"go hiking",cn:"去远足",type:"phrase"},{en:"make a snowman",cn:"堆雪人",type:"phrase"},
+    {en:"last Monday",cn:"上周一",type:"phrase"},{en:"last Tuesday",cn:"上周二",type:"phrase"},{en:"last Wednesday",cn:"上周三",type:"phrase"},
+    {en:"last Thursday",cn:"上周四",type:"phrase"},{en:"last Friday",cn:"上周五",type:"phrase"},{en:"last Saturday",cn:"上周六",type:"phrase"},
+    {en:"last Sunday",cn:"上周日",type:"phrase"},{en:"What did you do last weekend?",cn:"你上周末做了什么？",type:"sentence"},
+    {en:"I played football.",cn:"我踢足球了。",type:"sentence"},{en:"I visited my grandparents.",cn:"我看望了我的祖父母。",type:"sentence"},
+    {en:"Did you go to the park?",cn:"你去公园了吗？",type:"sentence"},{en:"Yes, I did.",cn:"是的，我去了。",type:"sentence"},
+    {en:"No, I didn't.",cn:"不，我没去。",type:"sentence"},
+  ]},
+  {id:'6b3',grade:6,title:"六下 Unit5-6",name:"旅行计划·一般将来时",emoji:"✈️",iconBg:"linear-gradient(135deg,#6366f1,#818cf8)",words:[
+    {en:"learn Chinese",cn:"学中文",type:"phrase"},{en:"sing and dance",cn:"唱歌跳舞",type:"phrase"},
+    {en:"take pictures",cn:"拍照",type:"phrase"},{en:"eat good food",cn:"吃美食",type:"phrase"},
+    {en:"climb mountains",cn:"爬山",type:"phrase"},{en:"row a boat",cn:"划船",type:"phrase"},
+    {en:"buy presents",cn:"买礼物",type:"phrase"},{en:"make a snowman",cn:"堆雪人",type:"phrase"},
+    {en:"tomorrow",cn:"明天",type:"word"},{en:"tonight",cn:"今晚",type:"word"},{en:"next week",cn:"下周",type:"phrase"},
+    {en:"next month",cn:"下个月",type:"phrase"},{en:"next year",cn:"明年",type:"phrase"},{en:"trip",cn:"旅行",type:"word"},
+    {en:"holiday",cn:"假期",type:"word"},{en:"prepare for",cn:"为……做准备",type:"phrase"},{en:"festival",cn:"节日",type:"word"},
+    {en:"Spring Festival",cn:"春节",type:"phrase"},{en:"get together",cn:"团聚",type:"phrase"},{en:"dragon boat",cn:"龙舟",type:"phrase"},
+    {en:"zongzi",cn:"粽子",type:"word"},{en:"Mid-Autumn Festival",cn:"中秋节",type:"phrase"},{en:"mooncake",cn:"月饼",type:"word"},
+    {en:"Where are you going on your holiday?",cn:"你假期要去哪里？",type:"sentence"},
+    {en:"I'm going to Beijing.",cn:"我要去北京。",type:"sentence"},{en:"What are you going to do there?",cn:"你打算在那里做什么？",type:"sentence"},
+    {en:"I'm going to visit the Great Wall.",cn:"我打算参观长城。",type:"sentence"},{en:"How are you going there?",cn:"你怎么去那里？",type:"sentence"},
+    {en:"I'm going by plane.",cn:"我坐飞机去。",type:"sentence"},{en:"When are you going?",cn:"你什么时候去？",type:"sentence"},
+  ]},
   // 综合复习
   {id:'rev1',grade:0,title:"综合复习 A",name:"高频日常词组",emoji:"🔥",iconBg:"linear-gradient(135deg,#ef4444,#f87171)",words:[
     {en:"get up",cn:"起床",type:"phrase"},{en:"go to school",cn:"去上学",type:"phrase"},
@@ -642,7 +736,8 @@ function renderUnitList(grade) {
     const gTag = u.grade===0?'<span class="grade-tag g0">复习</span>':
                  u.grade===3?'<span class="grade-tag g3">三年级</span>':
                  u.grade===4?'<span class="grade-tag g4">四年级</span>':
-                             '<span class="grade-tag g5">五年级</span>';
+                 u.grade===5?'<span class="grade-tag g5">五年级</span>':
+                             '<span class="grade-tag g6">六年级</span>';
     const c = document.createElement('div');
     c.className = 'unit-card';
     c.innerHTML = `
