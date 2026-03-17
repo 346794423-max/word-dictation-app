@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6d28d9;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="bookGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#dbeafe;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#1e3a8a" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- 圆角背景 -->
+  <rect width="512" height="512" rx="112" ry="112" fill="url(#bgGrad)"/>
+
+  <!-- 装饰光晕 -->
+  <circle cx="120" cy="100" r="180" fill="white" opacity="0.05"/>
+  <circle cx="400" cy="420" r="140" fill="white" opacity="0.05"/>
+
+  <!-- 书本主体 -->
+  <g filter="url(#shadow)">
+    <!-- 书本左页 -->
+    <path d="M120 148 L248 168 L248 372 L120 352 Z" fill="url(#bookGrad)" opacity="0.95"/>
+    <!-- 书本右页 -->
+    <path d="M264 168 L392 148 L392 352 L264 372 Z" fill="url(#bookGrad)" opacity="0.85"/>
+    <!-- 书脊 -->
+    <rect x="244" y="155" width="24" height="210" rx="4" fill="white" opacity="0.6"/>
+  </g>
+
+  <!-- 左页文字线条（模拟笔记） -->
+  <g opacity="0.5">
+    <rect x="145" y="208" width="80" height="6" rx="3" fill="#3b82f6"/>
+    <rect x="145" y="228" width="65" height="5" rx="2.5" fill="#6d28d9"/>
+    <rect x="145" y="246" width="75" height="5" rx="2.5" fill="#3b82f6"/>
+    <rect x="145" y="264" width="55" height="5" rx="2.5" fill="#6d28d9"/>
+    <rect x="145" y="282" width="70" height="5" rx="2.5" fill="#3b82f6"/>
+    <rect x="145" y="300" width="60" height="5" rx="2.5" fill="#6d28d9"/>
+  </g>
+
+  <!-- 右页文字线条 -->
+  <g opacity="0.4">
+    <rect x="278" y="208" width="90" height="6" rx="3" fill="#3b82f6"/>
+    <rect x="278" y="228" width="70" height="5" rx="2.5" fill="#6d28d9"/>
+    <rect x="278" y="246" width="80" height="5" rx="2.5" fill="#3b82f6"/>
+    <rect x="278" y="264" width="65" height="5" rx="2.5" fill="#6d28d9"/>
+    <rect x="278" y="282" width="75" height="5" rx="2.5" fill="#3b82f6"/>
+    <rect x="278" y="300" width="55" height="5" rx="2.5" fill="#6d28d9"/>
+  </g>
+
+  <!-- 铅笔图标 -->
+  <g transform="translate(300, 290) rotate(-35)">
+    <rect x="-10" y="-55" width="20" height="70" rx="3" fill="#fbbf24"/>
+    <polygon points="-10,15 10,15 0,35" fill="#f97316"/>
+    <rect x="-10" y="-62" width="20" height="10" rx="2" fill="#94a3b8"/>
+    <ellipse cx="0" cy="25" rx="3" ry="4" fill="#1e293b"/>
+  </g>
+
+  <!-- 声波图标（代表听写/朗读） -->
+  <g transform="translate(168, 165)">
+    <circle cx="0" cy="0" r="20" fill="#3b82f6" opacity="0.9"/>
+    <path d="M-6,-8 C-6,-8 -3,-12 0,-12 C3,-12 6,-8 6,-8 L6,8 C6,8 3,12 0,12 C-3,12 -6,8 -6,8 Z" fill="white"/>
+    <path d="M9,-10 Q15,0 9,10" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+    <path d="M13,-15 Q21,0 13,15" stroke="white" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+  </g>
+
+  <!-- 底部文字 -->
+  <text x="256" y="420" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif" font-size="38" font-weight="800" fill="white" opacity="0.95" letter-spacing="2">听写练习</text>
+  <text x="256" y="456" text-anchor="middle" font-family="Georgia,serif" font-size="20" font-weight="600" fill="white" opacity="0.75" letter-spacing="3">ENGLISH</text>
+</svg>
