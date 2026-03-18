@@ -175,7 +175,7 @@
           <label>密码</label>
           <input type="password" id="loginPassword" placeholder="输入密码"/>
         </div>
-        <button class="login-btn" id="loginBtn" onclick="handleLogin()">登录</button>
+        <button class="login-btn" id="loginBtn" onclick="handleLogin_debug()">登录</button>
       </div>
       <div id="registerForm" style="display:none">
         <div class="form-group">
@@ -190,9 +190,12 @@
           <label>昵称</label>
           <input type="text" id="registerUsername" placeholder="怎么称呼你"/>
         </div>
-        <button class="login-btn" id="registerBtn" onclick="handleRegister()">注册</button>
+        <button class="login-btn" id="registerBtn" onclick="handleRegister_debug()">注册</button>
       </div>
       <div class="login-error" id="loginError"></div>
+      <div style="text-align:center;margin-top:16px">
+        <button style="background:none;border:none;color:#64748b;font-size:13px;cursor:pointer;text-decoration:underline" onclick="skipLogin()">暂不登录，直接使用</button>
+      </div>
     </div>
   </div>
 </div>
@@ -386,9 +389,28 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 let supabase = null;
 let currentUser = null;
 
+// 页面切换函数（需要提前定义）
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function showToast(msg) {
+  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1800);
+}
+
 // 初始化 Supabase
+console.log('开始初始化Supabase...');
+console.log('window.supabase:', window.supabase);
+
 try {
-  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  if (!window.supabase) {
+    console.error('Supabase SDK未找到，请检查网络连接或CDN是否可访问');
+  } else {
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('Supabase客户端初始化成功');
+  }
 } catch(e) {
   console.error('Supabase 初始化失败:', e);
 }
@@ -421,6 +443,27 @@ function switchLoginTab(tab) {
   document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
   document.getElementById('loginError').textContent = '';
+}
+
+// 登录（调试版本）
+async function handleLogin_debug() {
+  console.log('登录按钮被点击');
+  console.log('supabase:', supabase);
+  console.log('window.supabase:', window.supabase);
+  
+  if (!window.supabase) {
+    document.getElementById('loginError').textContent = '登录服务未加载，请刷新页面重试。如果持续失败，请检查网络连接。';
+    console.error('Supabase SDK未加载');
+    return;
+  }
+  
+  if (!supabase) {
+    document.getElementById('loginError').textContent = '登录服务初始化失败，请刷新页面重试';
+    console.error('supabase客户端未初始化');
+    return;
+  }
+  
+  await handleLogin();
 }
 
 // 登录
@@ -461,6 +504,29 @@ async function handleLogin() {
   btn.textContent = '登录';
 }
 
+// 注册（调试版本）
+async function handleRegister_debug() {
+  console.log('注册按钮被点击');
+  console.log('supabase:', supabase);
+  console.log('window.supabase:', window.supabase);
+  
+  // 检查Supabase是否加载
+  if (!window.supabase) {
+    document.getElementById('loginError').textContent = '登录服务未加载，请刷新页面重试。如果持续失败，请检查网络连接。';
+    console.error('Supabase SDK未加载');
+    return;
+  }
+  
+  if (!supabase) {
+    document.getElementById('loginError').textContent = '登录服务初始化失败，请刷新页面重试';
+    console.error('supabase客户端未初始化');
+    return;
+  }
+  
+  // 调用正式注册函数
+  await handleRegister();
+}
+
 // 注册
 async function handleRegister() {
   if (!supabase) {
@@ -498,6 +564,16 @@ async function handleRegister() {
     document.getElementById('loginError').textContent = error.message;
     btn.disabled = false;
     btn.textContent = '注册';
+    return;
+  }
+  
+  // 检查是否需要邮箱确认
+  if (data.user && !data.session) {
+    document.getElementById('loginError').textContent = '注册成功！请前往邮箱确认验证邮件后登录。';
+    btn.disabled = false;
+    btn.textContent = '注册';
+    // 切换回登录标签
+    setTimeout(() => switchLoginTab('login'), 2000);
     return;
   }
   
@@ -548,6 +624,11 @@ async function logout() {
 function showUserProfile() {
   if (!currentUser) return;
   showToast('用户: ' + document.getElementById('userName').textContent);
+}
+
+// 跳过登录直接使用
+function skipLogin() {
+  showScreen('homeScreen');
 }
 
 // 页面加载时检查登录状态
@@ -1411,15 +1492,6 @@ function setStatus(msg) { document.getElementById('statusLine').textContent=msg;
 function showBadge(show,label) {
   const el=document.getElementById('speakingBadge'); el.style.display=show?'inline-flex':'none';
   if(label) document.getElementById('speakingLabel').textContent=label;
-}
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
-}
-function showToast(msg) {
-  const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
-  clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1800);
 }
 function shuffle(arr) { for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} }
 // 页面加载时预热语音引擎，确保语音列表加载完整
