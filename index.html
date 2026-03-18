@@ -395,11 +395,21 @@ try {
 
 // 检查登录状态
 async function checkAuth() {
-  if (!supabase) return;
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session) {
-    currentUser = session.user;
-    await loadUserProfile();
+  // 如果Supabase未加载，跳过登录直接进入首页
+  if (!supabase || !window.supabase) {
+    console.log('Supabase未加载，跳过登录');
+    showScreen('homeScreen');
+    return;
+  }
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      await loadUserProfile();
+      showScreen('homeScreen');
+    }
+  } catch(e) {
+    console.error('登录检查失败:', e);
     showScreen('homeScreen');
   }
 }
@@ -415,6 +425,11 @@ function switchLoginTab(tab) {
 
 // 登录
 async function handleLogin() {
+  if (!supabase) {
+    document.getElementById('loginError').textContent = '登录服务加载中，请刷新页面重试';
+    return;
+  }
+  
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
   const btn = document.getElementById('loginBtn');
@@ -448,6 +463,11 @@ async function handleLogin() {
 
 // 注册
 async function handleRegister() {
+  if (!supabase) {
+    document.getElementById('loginError').textContent = '注册服务加载中，请刷新页面重试';
+    return;
+  }
+  
   const email = document.getElementById('registerEmail').value.trim();
   const password = document.getElementById('registerPassword').value;
   const username = document.getElementById('registerUsername').value.trim();
