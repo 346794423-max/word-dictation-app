@@ -199,14 +199,6 @@
       <div class="interval-labels"><span>3秒（快）</span><span>20秒（慢）</span></div>
     </div>
     <div class="setup-card">
-      <h3>朗读次数</h3>
-      <div class="pill-row">
-        <button class="pill on" id="repeat1" onclick="setRepeat(1)">读1遍</button>
-        <button class="pill" id="repeat2" onclick="setRepeat(2)">读2遍</button>
-        <button class="pill" id="repeat3" onclick="setRepeat(3)">读3遍</button>
-      </div>
-    </div>
-    <div class="setup-card">
       <h3>出题数量</h3>
       <div class="range-row">
         <input type="range" id="countRange" min="5" max="30" value="20" step="1" oninput="updateCount(this.value)"/>
@@ -313,9 +305,9 @@ const UNITS = [
     {en:"pen",cn:"钢笔",type:"word"},{en:"pencil",cn:"铅笔",type:"word"},{en:"pencil case",cn:"铅笔盒",type:"word"},
     {en:"ruler",cn:"尺子",type:"word"},{en:"eraser",cn:"橡皮",type:"word"},{en:"crayon",cn:"蜡笔",type:"word"},
     {en:"book",cn:"书",type:"word"},{en:"bag",cn:"书包",type:"word"},
-    {en:"red",cn:"红色的",type:"word"},{en:"yellow",cn:"黄色的",type:"word"},{en:"green",cn:"绿色的",type:"word"},
-    {en:"blue",cn:"蓝色的",type:"word"},{en:"black",cn:"黑色的",type:"word"},{en:"white",cn:"白色的",type:"word"},
-    {en:"orange",cn:"橙色的",type:"word"},{en:"brown",cn:"棕色的",type:"word"},{en:"pink",cn:"粉红色的",type:"word"},{en:"purple",cn:"紫色的",type:"word"},
+    {en:"red",cn:"红色",type:"word"},{en:"yellow",cn:"黄色",type:"word"},{en:"green",cn:"绿色",type:"word"},
+    {en:"blue",cn:"蓝色",type:"word"},{en:"black",cn:"黑色",type:"word"},{en:"white",cn:"白色",type:"word"},
+    {en:"orange",cn:"橙色",type:"word"},{en:"brown",cn:"棕色",type:"word"},{en:"pink",cn:"粉红色",type:"word"},{en:"purple",cn:"紫色",type:"word"},
     {en:"I have a pen.",cn:"我有一支钢笔。",type:"sentence"},{en:"What colour is it?",cn:"它是什么颜色？",type:"sentence"},
   ]},
   {id:'3a2',grade:3,title:"三上 Unit3-4",name:"身体·动物",emoji:"🐱",iconBg:"linear-gradient(135deg,#f59e0b,#fbbf24)",words:[
@@ -555,11 +547,11 @@ const UNITS = [
     {en:"What's the matter?",cn:"你怎么了？",type:"sentence"},{en:"I have a fever.",cn:"我发烧了。",type:"sentence"},
   ]},
   {id:'6b2',grade:6,title:"六下 Unit3-4",name:"过去式·过去进行时",emoji:"🕰️",iconBg:"linear-gradient(135deg,#ec4899,#f472b6)",words:[
-    {en:"watch-watched",cn:"看-过去式",type:"word"},{en:"wash-washed",cn:"洗-过去式",type:"word"},
-    {en:"clean-cleaned",cn:"打扫-过去式",type:"word"},{en:"play-played",cn:"玩-过去式",type:"word"},
-    {en:"visit-visited",cn:"看望-过去式",type:"word"},{en:"do-did",cn:"做-过去式",type:"word"},
-    {en:"go-went",cn:"去-过去式",type:"word"},{en:"read-read",cn:"读-过去式",type:"word"},
-    {en:"swim-swam",cn:"游泳-过去式",type:"word"},{en:"fly-flew",cn:"飞-过去式",type:"word"},
+    {en:"watched",cn:"看（过去式）",type:"word"},{en:"washed",cn:"洗（过去式）",type:"word"},
+    {en:"cleaned",cn:"打扫（过去式）",type:"word"},{en:"played",cn:"玩（过去式）",type:"word"},
+    {en:"visited",cn:"看望（过去式）",type:"word"},{en:"did",cn:"做（过去式）",type:"word"},
+    {en:"went",cn:"去（过去式）",type:"word"},{en:"read",cn:"读（过去式）",type:"word"},
+    {en:"swam",cn:"游泳（过去式）",type:"word"},{en:"flew",cn:"飞（过去式）",type:"word"},
     {en:"last weekend",cn:"上周末",type:"phrase"},{en:"last night",cn:"昨晚",type:"phrase"},{en:"yesterday",cn:"昨天",type:"word"},
     {en:"tomorrow",cn:"明天",type:"word"},{en:"tonight",cn:"今晚",type:"word"},{en:"next weekend",cn:"下周末",type:"phrase"},
     {en:"fly kites",cn:"放风筝",type:"phrase"},{en:"go hiking",cn:"去远足",type:"phrase"},{en:"make a snowman",cn:"堆雪人",type:"phrase"},
@@ -923,25 +915,22 @@ async function runWord() {
   setStatus('正在朗读…');
   showBadge(true,'正在朗读');
 
-  for (let r=0; r<repeatTimes; r++) {
+  if (stopped) return;
+  await waitIfPaused();
+  if (stopped) return;
+  if (readMode==='cn+en'||readMode==='cn') {
+    setStatus('朗读中文'); showBadge(true,'朗读中文');
+    await speakAsync(w.cn,'zh-CN');
+    if (stopped) return;
+    await sleep(400);
+  }
+  if (readMode==='cn+en'||readMode==='en') {
     if (stopped) return;
     await waitIfPaused();
+    setStatus('朗读英文'); showBadge(true,'朗读英文');
+    await speakAsync(w.en,'en-US');
     if (stopped) return;
-    if (readMode==='cn+en'||readMode==='cn') {
-      setStatus(`第${r+1}遍：朗读中文`); showBadge(true,'朗读中文');
-      await speakAsync(w.cn,'zh-CN');
-      if (stopped) return;
-      await sleep(400);
-    }
-    if (readMode==='cn+en'||readMode==='en') {
-      if (stopped) return;
-      await waitIfPaused();
-      setStatus(`第${r+1}遍：朗读英文`); showBadge(true,'朗读英文');
-      await speakAsync(w.en,'en-US');
-      if (stopped) return;
-      await sleep(300);
-    }
-    if (r<repeatTimes-1) await sleep(600);
+    await sleep(300);
   }
 
   showBadge(false);
@@ -1064,27 +1053,85 @@ function practiceMarked()  {
 }
 
 // ═══════════════════════════
-// SPEECH
+// SPEECH — 优化发音引擎
 // ═══════════════════════════
+
+// 语音优先级列表：高质量 > 在线 > 本地
+const EN_VOICE_PRIORITY = [
+  'Samantha',        // macOS 高品质英文女声
+  'Karen',           // macOS 澳洲英文
+  'Daniel',          // macOS 英式英文
+  'Google US English',
+  'Google UK English Female',
+  'Microsoft Aria',
+  'Microsoft Jenny',
+  'Microsoft Zira',
+];
+const ZH_VOICE_PRIORITY = [
+  'Tingting',        // macOS 中文普通话女声
+  'Sinji',           // macOS 粤语（备用）
+  'Google 普通话（中国大陆）',
+  'Google Chinese (China)',
+  'Microsoft Xiaoxiao',
+  'Microsoft Huihui',
+  'Microsoft Yaoyao',
+];
+
+function getBestVoice(isEn) {
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  const priority = isEn ? EN_VOICE_PRIORITY : ZH_VOICE_PRIORITY;
+  const langPrefix = isEn ? 'en' : 'zh';
+
+  // 按优先级找指定语音
+  for (const name of priority) {
+    const v = voices.find(x => x.name.includes(name));
+    if (v) return v;
+  }
+  // 找高质量在线语音（非本地）
+  const online = voices.find(x => x.lang.startsWith(langPrefix) && !x.localService);
+  if (online) return online;
+  // 最后备选本地语音
+  return voices.find(x => x.lang.startsWith(langPrefix)) || null;
+}
+
 function speakAsync(text, lang) {
   return new Promise(resolve => {
     if (!('speechSynthesis' in window)) { resolve(); return; }
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang  = lang; u.rate  = lang.startsWith('zh')?0.88:0.78; u.pitch = 1;
+    const isEn = lang.startsWith('en');
+    u.lang  = lang;
+    // 英文：稍慢语速使发音清晰；中文：正常语速
+    u.rate  = isEn ? 0.82 : 0.9;
+    u.pitch = isEn ? 1.05 : 1.0;   // 英文略提音调，听起来更清晰明亮
+    u.volume = 1;
+
+    // 等语音列表加载完毕后再挑选
+    const trySpeak = () => {
+      const v = getBestVoice(isEn);
+      if (v) u.voice = v;
+      u.onend   = resolve;
+      u.onerror = resolve;
+      speechSynthesis.speak(u);
+    };
+
     const voices = speechSynthesis.getVoices();
-    const v = voices.find(x=>x.lang.startsWith(lang.startsWith('zh')?'zh':'en')&&x.localService)
-           || voices.find(x=>x.lang.startsWith(lang.startsWith('zh')?'zh':'en'));
-    if (v) u.voice = v;
-    u.onend=resolve; u.onerror=resolve;
-    speechSynthesis.speak(u);
+    if (voices.length > 0) {
+      trySpeak();
+    } else {
+      speechSynthesis.onvoiceschanged = () => { trySpeak(); speechSynthesis.onvoiceschanged = null; };
+    }
   });
 }
+
 function speakOnce(text) {
   if (!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
-  u.lang='en-US'; u.rate=0.78;
+  u.lang = 'en-US'; u.rate = 0.82; u.pitch = 1.05; u.volume = 1;
+  const v = getBestVoice(true);
+  if (v) u.voice = v;
   speechSynthesis.speak(u);
 }
 function sleep(ms) { return new Promise(r=>setTimeout(r,ms)); }
@@ -1107,7 +1154,11 @@ function showToast(msg) {
   clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1800);
 }
 function shuffle(arr) { for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];} }
-if('speechSynthesis' in window) speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices();
+// 页面加载时预热语音引擎，确保语音列表加载完整
+if ('speechSynthesis' in window) {
+  speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+}
 </script>
 </body>
 </html>
